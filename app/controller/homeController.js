@@ -29,29 +29,29 @@ export const homeController = async (req, res) => {
     }
 }
 export const searchData = async (req , res)=>{
-    const perPage = 8;
-    let page = parseInt(req.query.page) || 1;
-    try {
-        const summery = await Summery.find({title: { $regex: req.query.search, $options: "i" },})
-        .sort("-score")
-        .skip(perPage * page - perPage)
-        .limit(perPage)
-        .populate("_id")
-        .exec();
+    // const perPage = 8;
+    // let page = parseInt(req.query.page) || 1;
+    // try {
+    //     const summery = await Summery.find({title: { $regex: req.query.search, $options: "i" },})
+    //     .sort("-score")
+    //     .skip(perPage * page - perPage)
+    //     .limit(perPage)
+    //     .populate("_id")
+    //     .exec();
 
-        const count = await Summery.count({title: { $regex: req.query.search, $options: "i" },});
-        res.render("index", {
-        pageName: "Search Results",
-        summery,
-        current: page,
-        breadcrumbs: null,
-        home: "/products/search?search=" + req.query.search + "&",
-        pages: Math.ceil(count / perPage),
-        });
-    } catch (error) {
-        console.log(error);
-        res.redirect("/");
-    }
+    //     const count = await Summery.count({title: { $regex: req.query.search, $options: "i" },});
+    //     res.render("index", {
+    //     pageName: "Search Results",
+    //     summery,
+    //     current: page,
+    //     breadcrumbs: null,
+    //     home: "/products/search?search=" + req.query.search + "&",
+    //     pages: Math.ceil(count / perPage),
+    //     });
+    // } catch (error) {
+    //     console.log(error);
+    //     res.redirect("/");
+    // }
 }
 export const postController=async (req,res)=>{
     try {
