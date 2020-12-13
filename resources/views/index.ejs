@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Hacker Team LeaderBoard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <link href="main.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div class="app-header header-shadow">
+            <div class="app-header__content">
+                
+                <div class="app-header-left">
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left text-dark">
+                                    <h4 class="font-weight-bold font-italic">Hacker Team Leader Board</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+                <div class="app-header-right">
+                    <div class="search-wrapper">
+                        <form action="/products/search" method="GET">
+                            <div class="input-holder">
+                                <input type="text" name="search" class="search-input" placeholder="Type to search">
+                                <button class="search-icon"><span></span></button>
+                            </div>
+                            <button class="close"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="app-main">
+                <div class="app-main__outer">
+                    <div class="app-main__inner">          
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card shadow">
+                                    <div class="card-header">Teams
+                                        <div class="btn-actions-pane-right">
+                                            <div role="group" class="btn-group-sm btn-group">
+                                                <button class="active btn btn-success font-weight-bold" data-toggle="modal" data-target="#exampleModal">+</button>
+                                                <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add New Team</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">Team Name</th>
+                                                <th class="text-center">Win</th>
+                                                <th class="text-center">Loss</th>
+                                                <th class="text-center">Ties</th>
+                                                <th class="text-center">Score</th>
+                                            </thead>
+                                            <tbody>
+                                            <% summery.forEach((data)=>{
+                                            %>
+                                            <tr>
+                                                <td class="text-center text-muted"><%= data.team_name %></td>
+                                                <td class="text-center text-muted">
+                                                    <div class="badge badge-success"><%= data.wins %></div></td>
+                                                <td class="text-center">
+                                                    <div class="badge badge-danger"><%= data.losses %></div></td>
+                                                <td class="text-center">
+                                                    <div class="badge badge-warning"><%= data.ties %></div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm"><%= data.score %></button>
+                                                </td>
+                                            </tr>
+                                            <%}) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-block text-center card-footer justify-content-center">
+                                        <div class="justify-content-center pull-right">
+                                            <% if (pages > 0) { %>
+                                                <ul class="pagination text-center">
+                                                  <% if (current == 1) { %>
+                                                  <li class="page-item disabled"><a class="page-link">Prev</a></li>
+                                                  <% } else { %>
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="<%=home%>page=1">Prev</a>
+                                                  </li>
+                                                  <% } %> <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> 
+                                                  <% if (i !== 1) { %>
+                                                  <li class="page-item disabled"><a class="page-link">...</a></li>
+                                                  <% } %> <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %> 
+                                                    <% if (i == current) { %>
+                                                  <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                                                  <% } else { %>
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="<%=home%>page=<%= i %>"><%= i %></a>
+                                                  </li>
+                                                  <% } %> <% if (i == Number(current) + 4 && i < pages) { %>
+                                                  <li class="page-item disabled"><a class="page-link">...</a></li>
+                                                  <% } %> <% } %> <% if (current == pages) { %>
+                                                  <li class="page-item disabled"><a class="page-link">Next</a></li>
+                                                  <% } else { %>
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="<%=home%>page=<%= pages %>">Next</a>
+                                                  </li>
+                                                  <% } %>
+                                                </ul>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
+            <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        </div>
+    </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Add  New Team</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/post" method="post">
+          <div class="modal-body">
+              <div class="form-row">
+                  <!-- <div class="col">
+                    <select name="team_name" id="team_name" class="form-control">
+                        <option value="">Select Team 1</option>
+                        <% selectbox.forEach((data)=>{
+                            %>
+                                <option value="<%= data.team_name %>"><%= data._id %></option>
+                            <%
+                        })%>
+                    </select>
+                  </div> -->
+                  <div class="col">
+                    <div class="form-group">
+                        <select name="team_name1" id="team_name" class="form-control">
+                            <option value="">Select Team 1</option>
+                            <% selectbox.forEach((data)=>{
+                                %>
+                                    <option value="<%= data.team_name %>"><%= data.team_name %></option>
+                                <%
+                            })%>
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                        <select name="win_type" id="win_type1" class="form-control">
+                            <option value="">Match Wining Type</option>
+                            <option value="wins">wins</option>
+                            <option value="losses">losses</option>
+                            <option value="ties">ties</option>
+                        </select>
+                    </div>
+                  </div>
+              </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <select name="team_name2" id="team_name" class="form-control">
+                            <option value="">Select Team 2</option>
+                            <% 
+                            selectbox.forEach((data)=>{
+                                %>
+                                    <option value="<%= data.team_name %>"><%= data.team_name %></option>
+                                <%
+                            })%>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <select name="win_type" id="win_type2" class="form-control">
+                            <option value="">Match Wining Type</option>
+                            <option value="wins">wins</option>
+                            <option value="losses">losses</option>
+                            <option value="ties">ties</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- <div class="form-group">
+                <input type="text" name="losses" class="form-control" placeholder="losses">
+            </div>
+            <div class="form-group">
+                <input type="text" name="ties" class="form-control" placeholder="ties">
+            </div>
+            <div class="form-group">
+                <input type="text" name="score" class="form-control" placeholder="score">
+            </div> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="assets/scripts/main.js"></script>
+
+
+</body>
+</html>
